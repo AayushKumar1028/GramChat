@@ -128,4 +128,78 @@ Native iPhone and iPad application with messaging-focused functionality.
 ### Version 1.5
 
 - [ ] Improved notifications
-- [ ] 
+- [ ] Chat search
+- [ ] Multiple accounts
+
+---
+
+## How the Windows App Locks Instagram to Chat
+
+The Windows client (`src/InstaChatAccess`) embeds Instagram's official web client inside
+Microsoft Edge WebView2 and enforces a **Direct-Messages-only allowlist** at two levels:
+
+1. **Native navigation guard** (`Services/DmNavigationPolicy.cs`) — every top-level navigation
+   and every popup window is checked against an allowlist (DMs, login/two-factor/challenge
+   pages, internal Instagram endpoints). Everything else — feed, explore, reels, stories,
+   profiles, post pages — is cancelled and the app bounces back to the DM inbox.
+2. **In-page SPA guard** (`Services/PageHardening.cs`) — Instagram's web client is a React
+   single-page app whose in-app clicks never trigger a real navigation. An injected script
+   hooks the History API and re-checks the route every 500 ms, force-returning to the inbox
+   if the SPA ever leaves the chat experience. It also hides the distracting links
+   (Home, Explore, Reels, logo, …) from the navigation rail and relays the unread-message
+   count from the page title into the window title.
+
+Privacy notes:
+
+- Your password is never seen or stored — login happens on Instagram's own secure page.
+- Session cookies live in an encrypted WebView2 profile under
+  `%LOCALAPPDATA%\InstaChatAccess\WebView2` (Chromium encrypts them with Windows DPAPI).
+- `Privacy → Log out & clear local data…` deletes all cookies, caches and site storage.
+- Camera/microphone/geolocation prompts are left to WebView2's standard permission UI;
+  desktop notification permission is granted automatically so new-message toasts work.
+
+---
+
+## Building the Windows App from Source
+
+### Prerequisites
+
+- Windows 10 or newer
+- [.NET SDK 10.0](https://dotnet.microsoft.com/download/dotnet/10.0) (any recent patch)
+- The Microsoft Edge WebView2 runtime (pre-installed on up-to-date Windows 10/11)
+
+### Build & run
+
+```powershell
+dotnet build src/InstaChatAccess/InstaChatAccess.csproj -c Release
+
+# the executable lands here:
+start src/InstaChatAccess/bin/Release/net10.0-windows/InstaChatAccess.exe
+```
+
+> In this workspace a project-local SDK lives at `../tools/dotnet-sdk` (installed with
+> `tools/dotnet-install.ps1`); if the `dotnet` command is not on your PATH, invoke that
+> `dotnet.exe` instead.
+
+### Publish a distributable build
+
+Framework-dependent (small, needs .NET Desktop Runtime on the target PC):
+
+```powershell
+dotnet publish src/InstaChatAccess/InstaChatAccess.csproj -c Release -r win-x64 --self-contained false /p:PublishSingleFile=true
+```
+
+Self-contained (no runtime needed on the target PC, ~150 MB):
+
+```powershell
+dotnet publish src/InstaChatAccess/InstaChatAccess.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+```
+
+Output lands in `src/InstaChatAccess/bin/Release/net10.0-windows/win-x64/publish/`.
+
+### Developer tools inside the app
+
+DevTools are disabled by default. Enable them with the `INSTACHAT_DEVTOOLS=1` environment
+variable (or run under a debugger). Useful shortcuts: `Ctrl+D` inbox, `Ctrl+N` new message,
+`F5` reload, `Ctrl+Shift+L` log out & clear data.
+
