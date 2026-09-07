@@ -21,7 +21,7 @@ OWNER_REPO = "AayushKumar1028/Insta-chat"
 
 RELEASE_NOTES = """Chat-only Instagram for Windows - direct messages without Reels, Explore, Feed or Stories.
 
-**Download `InstaChatAccess-1.0-beta2-win-x64.zip` below, unzip it and run `InstaChatAccess.exe`.**
+**Download `InstaChatAccess-{zip_base}-win-x64.zip` below, unzip it and run `InstaChatAccess.exe`.**
 
 - Direct messages only - no Reels, Explore, Feed or Stories (navigation is hard-blocked)
 - Self-contained single-file exe: no .NET, Node.js or other prerequisites required
@@ -97,7 +97,7 @@ def main(tag: str, asset_path: Path, apply_notes: bool) -> None:
         payload = {
             "tag_name": tag,
             "name": release_title(tag),
-            "body": RELEASE_NOTES.format(tag=tag),
+            "body": RELEASE_NOTES.format(tag=tag, zip_base=tag.lstrip("v")),
             "draft": False,
             "prerelease": True,
         }
@@ -133,7 +133,8 @@ def main(tag: str, asset_path: Path, apply_notes: bool) -> None:
 
     # 3. Optionally apply the title and description.
     if apply_notes:
-        payload = {"name": release_title(tag), "body": RELEASE_NOTES.format(tag=tag)}
+        payload = {"name": release_title(tag),
+                   "body": RELEASE_NOTES.format(tag=tag, zip_base=tag.lstrip("v"))}
         status, _ = github_request(
             f"https://api.github.com/repos/{OWNER_REPO}/releases/{release['id']}",
             "PATCH",
