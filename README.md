@@ -189,13 +189,19 @@ Framework-dependent (small, needs .NET Desktop Runtime on the target PC):
 dotnet publish src/InstaChatAccess/InstaChatAccess.csproj -c Release -r win-x64 --self-contained false /p:PublishSingleFile=true
 ```
 
-Self-contained (no runtime needed on the target PC, ~150 MB):
+Self-contained single file (**no .NET runtime, Node.js or other prerequisites on the target
+PC** — the runtime and all required libraries are bundled into one exe):
 
 ```powershell
-dotnet publish src/InstaChatAccess/InstaChatAccess.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
+dotnet publish src/InstaChatAccess/InstaChatAccess.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
 ```
 
-Output lands in `src/InstaChatAccess/bin/Release/net10.0-windows/win-x64/publish/`.
+Output lands in `src/InstaChatAccess/bin/Release/net10.0-windows/win-x64/publish/` and is
+a single ~66 MB `InstaChatAccess.exe` (plus optional `.pdb`/`.xml` debug/doc files you can
+delete). Ship that one file, or a zip of it like `dist/InstaChatAccess-1.0-beta1-win-x64.zip`.
+
+> The build is not code-signed, so Windows SmartScreen may show a warning the first time
+> someone runs a downloaded copy — choose "More info → Run anyway".
 
 ### Developer tools inside the app
 
