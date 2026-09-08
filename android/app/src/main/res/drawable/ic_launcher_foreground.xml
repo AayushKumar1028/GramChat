@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Chat bubble icon representing direct messages -->
+    <group
+        android:translateX="27"
+        android:translateY="27">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M27,0C12.09,0 0,10.74 0,24c0,7.28 3.84,13.84 10,18.36L7.5,54l13.2,-6.6C23.16,48.48 25.05,48 27,48c14.91,0 27,-10.74 27,-24S41.91,0 27,0z"/>
+        <path
+            android:fillColor="#FF6200EE"
+            android:pathData="M14,20l4,4 12,-12"
+            android:strokeWidth="3"
+            android:strokeColor="#FF6200EE"/>
+    </group>
+</vector>
