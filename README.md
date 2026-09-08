@@ -145,9 +145,18 @@ Microsoft Edge WebView2 and enforces a **Direct-Messages-only allowlist** at two
 2. **In-page SPA guard** (`Services/PageHardening.cs`) — Instagram's web client is a React
    single-page app whose in-app clicks never trigger a real navigation. An injected script
    hooks the History API and re-checks the route every 500 ms, force-returning to the inbox
-   if the SPA ever leaves the chat experience. It also hides the distracting links
-   (Home, Explore, Reels, logo, …) from the navigation rail and relays the unread-message
-   count from the page title into the window title.
+   if the SPA ever leaves the chat experience. It also tidies the page:
+   - hides the distracting links (Home, Explore, Reels, logo, the Create button, …) from
+     the navigation rail only — in-app toasts elsewhere on the page are left alone;
+   - covers Instagram's own header strip that peeks out under the app's title bar (the
+     "notch" reported by testers);
+   - mirrors each in-app toast into a corner overlay and holds it on screen for ~6 seconds,
+     so "Message sent" and friends stay readable instead of vanishing instantly;
+   - relays the unread-message count from the page title into the window title.
+
+> **Notifications** come in two flavours: Windows-level toasts produced by WebView2 (granted
+> automatically on first use) and Instagram's own in-app banners, which the app keeps
+> readable via the toast mirror above. Nothing was removed from either path.
 
 Privacy notes:
 

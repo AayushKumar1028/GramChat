@@ -10,7 +10,7 @@
     <AssemblyName>InstaChatAccess</AssemblyName>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>app.ico</ApplicationIcon>
-    <Version>1.0.0-beta3</Version>
+    <Version>1.0.0-beta4</Version>
     <Product>InstaChat Access</Product>
     <AssemblyTitle>InstaChat Access</AssemblyTitle>
     <Description>Chat-only Instagram desktop client. Direct messages without Reels, Explore, or Feed.</Description>
