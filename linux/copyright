@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: InstaChat
+Source: https://github.com/AayushKumar1028/Insta-chat
+
+Files: *
+Copyright: 2025-2026 InstaChat contributors
+License: See the upstream repository (https://github.com/AayushKumar1028/Insta-chat)
+ for the exact license terms of this project.

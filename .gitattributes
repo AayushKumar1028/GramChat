@@ -1,0 +1,4 @@
+# Keep files that run on Linux as LF even when edited on Windows.
+*.sh text eol=lf
+*.py text eol=lf
+*.desktop text eol=lf

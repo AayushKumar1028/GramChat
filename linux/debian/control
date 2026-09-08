@@ -1,0 +1,17 @@
+Package: instachat
+Version: @VERSION@
+Section: net
+Priority: optional
+Architecture: @ARCH@
+Depends: libwebkitgtk-6.0-4 (>= 2.44), libgtk-4-1 (>= 4.12), libc6 (>= 2.34)
+Installed-Size: @SIZE@
+Maintainer: InstaChat <instachat@users.noreply.github.com>
+Homepage: https://github.com/AayushKumar1028/Insta-chat
+Description: Chat-only Instagram desktop client
+ Direct messages without Reels, Explore, Feed or Stories.
+ .
+ InstaChat embeds Instagram's web client (WebKitGTK) and enforces a
+ Direct-Messages-only allowlist at two levels: a native navigation guard that
+ blocks every non-DM page, and an in-page SPA guard that force-returns the
+ app to the DM inbox if the client-side router ever leaves the chat
+ experience. Voice and video calls work through Instagram's WebRTC client.

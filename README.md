@@ -10,7 +10,7 @@ A lightweight desktop and mobile application that allows Instagram users with pa
 
 Instagram's parental restrictions and content controls are designed to protect users, but many users still need access to direct messages for communication with friends, family, work contacts, or school groups.
 
-**InstaChat** provides a chat-focused Instagram experience on both Windows and Android by allowing users to access only their Instagram messaging functionality.
+**InstaChat** provides a chat-focused Instagram experience on Windows, Linux and Android by allowing users to access only their Instagram messaging functionality.
 
 The application removes unnecessary distractions and focuses exclusively on communication.
 
@@ -42,6 +42,20 @@ The application removes unnecessary distractions and focuses exclusively on comm
 - Page hardening: hides non-DM navigation links, covers status bar notch, mirrors toasts
 - Desktop user agent for best Instagram web compatibility
 - Material 3 design with Jetpack Compose UI
+
+### Linux Features
+
+- Same DM-only experience as Windows and Android
+- Native GTK4 + WebKitGTK 6.0 client, packaged as a `.deb`
+- Voice and video call support via WebRTC (camera/mic auto-granted on call)
+- Desktop notification permission auto-granted (new-message and incoming-call toasts)
+- Two-layer navigation guard (native + JavaScript SPA route guard)
+- Page hardening: hides non-DM navigation links, covers the header "notch", mirrors toasts
+- Desktop Chrome user agent for best Instagram web compatibility
+- Single-instance application (a second launch focuses the existing window)
+- Window size/maximized state remembered between runs
+- Offline overlay with retry, keyboard shortcuts (Ctrl+D, Ctrl+N, F5, Ctrl+Shift+L)
+- Log out & clear local data from the Privacy menu
 
 ---
 
@@ -110,6 +124,13 @@ Your privacy is important.
 - Active Instagram account
 - Camera and microphone permissions (for voice/video calls)
 
+### Linux
+
+- 64-bit x86 Linux (Ubuntu 24.04+, Debian 13+, Fedora 41+, Arch) — needs WebKitGTK 6.0
+- Internet connection
+- Active Instagram account
+- Camera and microphone access (for voice/video calls)
+
 ---
 
 ## Planned Features
@@ -147,6 +168,15 @@ Native iPhone and iPad application with messaging-focused functionality.
 - [x] Voice and video calls
 - [x] Navigation guards (DM-only)
 - [x] Page hardening
+
+### Version 1.0 (Linux) — `v1.0-Linux-beta1`
+
+- [x] Instagram login
+- [x] Direct messaging support
+- [x] Voice and video calls
+- [x] Navigation guards (DM-only)
+- [x] Page hardening
+- [x] `.deb` packaging (amd64)
 
 ### Version 1.5
 
@@ -298,4 +328,81 @@ adb install android/app/build/outputs/apk/debug/app-debug.apk
 ### Download pre-built APK
 
 Pre-built debug APKs are attached to each [GitHub release](https://github.com/AayushKumar1028/Insta-chat/releases).
+
+---
+
+## How the Linux App Locks Instagram to Chat
+
+The Linux client (`src/InstaChatLinux`) is the C# twin of the Windows client,
+built on GTK4 + WebKitGTK 6.0 (via the GirCore bindings) instead of WPF +
+WebView2. It shares the exact same two guard layers because the policy and the
+injected script are the same source files (`Services/DmNavigationPolicy.cs` and
+`Services/PageHardening.cs`, linked into both projects):
+
+1. **Native navigation guard** — every navigation and every new-window request
+   is classified as Allow / Bounce-to-inbox / Block before WebKit starts the
+   load. Everything outside the chat + login flow is cancelled and the app
+   bounces back to the DM inbox.
+2. **In-page SPA guard** — the same `PageHardening` script as Windows is
+   injected at document start: it watches the History API and the pathname,
+   force-returns the SPA to the inbox if it ever leaves the chat experience,
+   hides the distracting rail links (Home, Explore, Reels, Create, the logo),
+   covers Instagram's own header strip under the app bar (the "notch"), and
+   mirrors in-app toasts into a readable overlay for a few seconds.
+
+Voice and video calls work through Instagram's WebRTC implementation: camera
+and microphone requests are granted automatically (the page only uses them
+after you start or accept a call), and media autoplay is allowed so the
+incoming-call ringtone plays without a prior click.
+
+Privacy notes:
+
+- Your password is never seen or stored — login happens on Instagram's own secure page.
+- Session cookies live in a dedicated profile under `~/.local/share/InstaChat`
+  (WebKitGTK profile directories are isolated from the system browser).
+- `Privacy → Log out & clear local data…` clears all cookies, caches and site storage.
+- No analytics, no advertising SDKs, no data collection.
+
+---
+
+## Building and installing the Linux App (.deb)
+
+### Prerequisites (build machine)
+
+- .NET SDK 10.0 (auto-detected; the workspace-local SDK works too)
+- Python 3 (only used to assemble the `.deb`; no `dpkg` required, so the
+  package can be built from the Windows checkout as well)
+
+### Build the .deb
+
+```bash
+./linux/build-deb.sh
+```
+
+This publishes `src/InstaChatLinux` self-contained for `linux-x64` and writes
+`dist/InstaChat-1.0-Linux-beta1-amd64.deb`.
+
+### Install
+
+On Debian/Ubuntu (with WebKitGTK 6.0, e.g. Ubuntu 24.04+, Debian 13+):
+
+```bash
+sudo apt install ./dist/InstaChat-1.0-Linux-beta1-amd64.deb
+```
+
+The package installs the app to `/usr/lib/instachat`, an `instachat` launcher
+on the PATH, a desktop entry, and the icon. Uninstall with
+`sudo apt remove instachat`.
+
+> **Requirements at runtime:** the package depends on `libwebkitgtk-6.0-4`
+> (WebKitGTK 6.0) and `libgtk-4-1`, which `apt` installs automatically on
+> Debian/Ubuntu. Fedora users can install `webkitgtk6` + `gtk4` and convert the
+> package with `alien`, or run the published binary directly from
+> `src/InstaChatLinux/bin/Release/net10.0/linux-x64/publish/`.
+
+### Developer tools inside the app
+
+Same as Windows: set `INSTACHAT_DEVTOOLS=1` (or run under a debugger) to enable
+WebKitGTK's developer extras. Shortcuts: `Ctrl+D` inbox, `Ctrl+N` new message,
+`F5` reload, `Ctrl+Shift+L` log out & clear data.
 
