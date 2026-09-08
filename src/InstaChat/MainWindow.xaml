@@ -1,8 +1,8 @@
-<Window x:Class="InstaChatAccess.MainWindow"
+<Window x:Class="InstaChat.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-        Title="InstaChat Access"
+        Title="InstaChat"
         Width="1080" Height="760"
         MinWidth="640" MinHeight="480"
         WindowStartupLocation="CenterScreen"
@@ -24,7 +24,7 @@
             <MenuItem Header="_Privacy">
                 <MenuItem Header="Log out &amp; clear local data…" InputGestureText="Ctrl+Shift+L" Command="{Binding LogoutCommand}" />
                 <Separator />
-                <MenuItem Header="_About InstaChat Access" Command="{Binding AboutCommand}" />
+                <MenuItem Header="_About InstaChat" Command="{Binding AboutCommand}" />
             </MenuItem>
         </Menu>
         <Grid>

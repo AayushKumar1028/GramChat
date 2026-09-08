@@ -1,4 +1,4 @@
-# InstaChat Access
+# InstaChat
 
 A lightweight desktop application that allows Instagram users with parental restrictions enabled on Instagram Reels to access **only their Instagram direct messages (DMs)** without exposing Reels, Explore, Feed recommendations, or other distracting content.
 
@@ -10,7 +10,7 @@ A lightweight desktop application that allows Instagram users with parental rest
 
 Instagram's parental restrictions and content controls are designed to protect users, but many users still need access to direct messages for communication with friends, family, work contacts, or school groups.
 
-**InstaChat Access** is a Windows application that provides a chat-focused Instagram experience by allowing users to access only their Instagram messaging functionality.
+**InstaChat** is a Windows application that provides a chat-focused Instagram experience by allowing users to access only their Instagram messaging functionality.
 
 The application removes unnecessary distractions and focuses exclusively on communication.
 
@@ -44,7 +44,7 @@ Many users:
 - Prefer a distraction-free messaging experience
 - Don't want to spend time scrolling through Reels or Explore
 
-InstaChat Access provides a focused solution by separating messaging from the rest of the Instagram platform.
+InstaChat provides a focused solution by separating messaging from the rest of the Instagram platform.
 
 ---
 
@@ -135,7 +135,7 @@ Native iPhone and iPad application with messaging-focused functionality.
 
 ## How the Windows App Locks Instagram to Chat
 
-The Windows client (`src/InstaChatAccess`) embeds Instagram's official web client inside
+The Windows client (`src/InstaChat`) embeds Instagram's official web client inside
 Microsoft Edge WebView2 and enforces a **Direct-Messages-only allowlist** at two levels:
 
 1. **Native navigation guard** (`Services/DmNavigationPolicy.cs`) — every top-level navigation
@@ -162,7 +162,7 @@ Privacy notes:
 
 - Your password is never seen or stored — login happens on Instagram's own secure page.
 - Session cookies live in an encrypted WebView2 profile under
-  `%LOCALAPPDATA%\InstaChatAccess\WebView2` (Chromium encrypts them with Windows DPAPI).
+  `%LOCALAPPDATA%\InstaChat\WebView2` (Chromium encrypts them with Windows DPAPI).
 - `Privacy → Log out & clear local data…` deletes all cookies, caches and site storage.
 - Camera/microphone/geolocation prompts are left to WebView2's standard permission UI;
   desktop notification permission is granted automatically so new-message toasts work.
@@ -180,10 +180,10 @@ Privacy notes:
 ### Build & run
 
 ```powershell
-dotnet build src/InstaChatAccess/InstaChatAccess.csproj -c Release
+dotnet build src/InstaChat/InstaChat.csproj -c Release
 
 # the executable lands here:
-start src/InstaChatAccess/bin/Release/net10.0-windows/InstaChatAccess.exe
+start src/InstaChat/bin/Release/net10.0-windows/InstaChat.exe
 ```
 
 > In this workspace a project-local SDK lives at `../tools/dotnet-sdk` (installed with
@@ -195,19 +195,19 @@ start src/InstaChatAccess/bin/Release/net10.0-windows/InstaChatAccess.exe
 Framework-dependent (small, needs .NET Desktop Runtime on the target PC):
 
 ```powershell
-dotnet publish src/InstaChatAccess/InstaChatAccess.csproj -c Release -r win-x64 --self-contained false /p:PublishSingleFile=true
+dotnet publish src/InstaChat/InstaChat.csproj -c Release -r win-x64 --self-contained false /p:PublishSingleFile=true
 ```
 
 Self-contained single file (**no .NET runtime, Node.js or other prerequisites on the target
 PC** — the runtime and all required libraries are bundled into one exe):
 
 ```powershell
-dotnet publish src/InstaChatAccess/InstaChatAccess.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
+dotnet publish src/InstaChat/InstaChat.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
 ```
 
-Output lands in `src/InstaChatAccess/bin/Release/net10.0-windows/win-x64/publish/` and is
-a single ~66 MB `InstaChatAccess.exe` (plus optional `.pdb`/`.xml` debug/doc files you can
-delete). Ship that one file, or a zip of it like `dist/InstaChatAccess-1.0-beta1-win-x64.zip`.
+Output lands in `src/InstaChat/bin/Release/net10.0-windows/win-x64/publish/` and is
+a single ~66 MB `InstaChat.exe` (plus optional `.pdb`/`.xml` debug/doc files you can
+delete). Ship that one file, or a zip of it like `dist/InstaChat-1.0-beta1-win-x64.zip`.
 
 > The build is not code-signed, so Windows SmartScreen may show a warning the first time
 > someone runs a downloaded copy — choose "More info → Run anyway".

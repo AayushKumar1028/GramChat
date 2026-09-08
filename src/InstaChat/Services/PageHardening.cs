@@ -1,4 +1,4 @@
-namespace InstaChatAccess.Services;
+namespace InstaChat.Services;
 
 /// <summary>
 /// JavaScript injected into every page Instagram creates.

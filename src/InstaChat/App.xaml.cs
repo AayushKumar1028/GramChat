@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Windows;
 
-namespace InstaChatAccess;
+namespace InstaChat;
 
 public partial class App : Application
 {
@@ -10,12 +10,12 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         // Two instances cannot share one WebView2 user-data folder, so keep it single-instance.
-        _singleInstanceMutex = new Mutex(true, @"Local\InstaChatAccess-SingleInstance", out var createdNew);
+        _singleInstanceMutex = new Mutex(true, @"Local\InstaChat-SingleInstance", out var createdNew);
         if (!createdNew)
         {
             MessageBox.Show(
-                "InstaChat Access is already running.",
-                "InstaChat Access",
+                "InstaChat is already running.",
+                "InstaChat",
                 MessageBoxButton.OK,
                 MessageBoxImage.Information);
             Shutdown();
@@ -26,7 +26,7 @@ public partial class App : Application
         {
             MessageBox.Show(
                 $"Something went wrong: {args.Exception.Message}",
-                "InstaChat Access",
+                "InstaChat",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
             args.Handled = true;

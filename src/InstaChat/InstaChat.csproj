@@ -6,15 +6,15 @@
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>InstaChatAccess</RootNamespace>
-    <AssemblyName>InstaChatAccess</AssemblyName>
+    <RootNamespace>InstaChat</RootNamespace>
+    <AssemblyName>InstaChat</AssemblyName>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>app.ico</ApplicationIcon>
     <Version>1.0.0-beta4</Version>
-    <Product>InstaChat Access</Product>
-    <AssemblyTitle>InstaChat Access</AssemblyTitle>
+    <Product>InstaChat</Product>
+    <AssemblyTitle>InstaChat</AssemblyTitle>
     <Description>Chat-only Instagram desktop client. Direct messages without Reels, Explore, or Feed.</Description>
-    <Authors>InstaChat Access</Authors>
+    <Authors>InstaChat</Authors>
   </PropertyGroup>
 
   <ItemGroup>

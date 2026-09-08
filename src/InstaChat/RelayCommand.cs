@@ -1,6 +1,6 @@
 using System.Windows.Input;
 
-namespace InstaChatAccess;
+namespace InstaChat;
 
 /// <summary>Minimal <see cref="ICommand"/> implementation for menu and key bindings.</summary>
 public sealed class RelayCommand(Action execute, Func<bool>? canExecute = null) : ICommand

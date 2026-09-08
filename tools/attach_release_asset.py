@@ -4,7 +4,7 @@ Uses the GitHub credential stored by Git Credential Manager (the same one used f
 git push) - the token is read in-process and never printed.
 
 Usage:  python tools/attach_release_asset.py <tag> <asset-file> [--apply-notes]
-Example: python tools/attach_release_asset.py v1.0-beta2 dist/InstaChatAccess-1.0-beta2-win-x64.zip
+Example: python tools/attach_release_asset.py v1.0-beta2 dist/InstaChat-1.0-beta2-win-x64.zip
 
 --apply-notes also sets the release title (convention: "v1.0-beta2" -> "v.1.0-beta2")
 and the release description.
@@ -21,7 +21,7 @@ OWNER_REPO = "AayushKumar1028/Insta-chat"
 
 RELEASE_NOTES = """Chat-only Instagram for Windows - direct messages without Reels, Explore, Feed or Stories.
 
-**Download `InstaChatAccess-{zip_base}-win-x64.zip` below, unzip it and run `InstaChatAccess.exe`.**
+**Download `InstaChat-{zip_base}-win-x64.zip` below, unzip it and run `InstaChat.exe`.**
 
 - Direct messages only - no Reels, Explore, Feed or Stories (navigation is hard-blocked)
 - Self-contained single-file exe: no .NET, Node.js or other prerequisites required

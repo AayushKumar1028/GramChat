@@ -2,15 +2,15 @@ using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
-using InstaChatAccess.Services;
+using InstaChat.Services;
 using Microsoft.Web.WebView2.Core;
 
-namespace InstaChatAccess;
+namespace InstaChat;
 
 public partial class MainWindow : Window
 {
-    private const string AppTitle = "InstaChat Access";
-    private const string AppDataFolderName = "InstaChatAccess";
+    private const string AppTitle = "InstaChat";
+    private const string AppDataFolderName = "InstaChat";
 
     private static readonly string AppDataDir = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -67,7 +67,7 @@ public partial class MainWindow : Window
         {
             MessageBox.Show(
                 this,
-                "InstaChat Access could not start its embedded browser.\n\n"
+                "InstaChat could not start its embedded browser.\n\n"
                 + "Please make sure the Microsoft Edge WebView2 runtime is installed.\n\n"
                 + $"Details: {ex.Message}",
                 AppTitle,

@@ -1,7 +1,7 @@
-namespace InstaChatAccess.Services;
+namespace InstaChat.Services;
 
 /// <summary>
-/// Central policy that decides which web locations InstaChat Access may load.
+/// Central policy that decides which web locations InstaChat may load.
 /// Everything outside the allowlist is cancelled and bounced back to the DM inbox,
 /// which is what keeps Reels, Explore, Feed and Stories out of reach.
 /// </summary>

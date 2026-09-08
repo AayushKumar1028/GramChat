@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Windows;
 
-namespace InstaChatAccess;
+namespace InstaChat;
 
 public partial class AboutWindow : Window
 {
