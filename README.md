@@ -1,6 +1,6 @@
 # InstaChat
 
-A lightweight desktop application that allows Instagram users with parental restrictions enabled on Instagram Reels to access **only their Instagram direct messages (DMs)** without exposing Reels, Explore, Feed recommendations, or other distracting content.
+A lightweight desktop and mobile application that allows Instagram users with parental restrictions enabled on Instagram Reels to access **only their Instagram direct messages (DMs)** without exposing Reels, Explore, Feed recommendations, or other distracting content.
 
 > Stay connected through Instagram chats while keeping social media distractions out of reach.
 
@@ -10,7 +10,7 @@ A lightweight desktop application that allows Instagram users with parental rest
 
 Instagram's parental restrictions and content controls are designed to protect users, but many users still need access to direct messages for communication with friends, family, work contacts, or school groups.
 
-**InstaChat** is a Windows application that provides a chat-focused Instagram experience by allowing users to access only their Instagram messaging functionality.
+**InstaChat** provides a chat-focused Instagram experience on both Windows and Android by allowing users to access only their Instagram messaging functionality.
 
 The application removes unnecessary distractions and focuses exclusively on communication.
 
@@ -18,7 +18,7 @@ The application removes unnecessary distractions and focuses exclusively on comm
 
 ## Features
 
-### Current Features (Windows)
+### Windows Features
 
 - Secure Instagram authentication
 - Access to Instagram Direct Messages
@@ -31,6 +31,16 @@ The application removes unnecessary distractions and focuses exclusively on comm
 - No content feed access
 - No story browsing
 - Lightweight desktop experience
+
+### Android Features
+
+- Same DM-only experience as Windows
+- Voice and video call support via WebRTC
+- Camera and microphone permissions for calls
+- Two-layer navigation guard (native + JavaScript SPA route guard)
+- Page hardening: hides non-DM navigation links, covers status bar notch, mirrors toasts
+- Desktop user agent for best Instagram web compatibility
+- Material 3 design with Jetpack Compose UI
 
 ---
 
@@ -92,13 +102,16 @@ Your privacy is important.
 - Internet connection
 - Active Instagram account
 
+### Android
+
+- Android 7.0 (API 24) or higher
+- Internet connection
+- Active Instagram account
+- Camera and microphone permissions (for voice/video calls)
+
 ---
 
 ## Planned Features
-
-### Android Support
-
-Native Android application allowing the same chat-only Instagram experience.
 
 ### iOS Support
 
@@ -118,12 +131,20 @@ Native iPhone and iPad application with messaging-focused functionality.
 
 ## Roadmap
 
-### Version 1.0
+### Version 1.0 (Windows)
 
 - [x] Instagram login
 - [x] Direct messaging support
 - [x] Conversation management
 - [x] Clean UI
+
+### Version 1.0 (Android)
+
+- [x] Instagram login
+- [x] Direct messaging support
+- [x] Voice and video calls
+- [x] Navigation guards (DM-only)
+- [x] Page hardening
 
 ### Version 1.5
 
@@ -217,4 +238,60 @@ delete). Ship that one file, or a zip of it like `dist/InstaChat-1.0-beta1-win-x
 DevTools are disabled by default. Enable them with the `INSTACHAT_DEVTOOLS=1` environment
 variable (or run under a debugger). Useful shortcuts: `Ctrl+D` inbox, `Ctrl+N` new message,
 `F5` reload, `Ctrl+Shift+L` log out & clear data.
+
+---
+
+## How the Android App Locks Instagram to Chat
+
+The Android client (`android/app`) wraps Instagram's web client in a WebView and enforces the same **Direct-Messages-only allowlist** at two levels:
+
+1. **Native navigation guard** (`webview/DmNavigationPolicy.kt`) — every URL the WebView tries to load is classified as Allow, BounceToInbox, or Block. Non-DM Instagram pages (feed, explore, reels, stories) are blocked or bounced back to the inbox.
+2. **In-page SPA guard** (`webview/PageHardening.kt`) — the same JavaScript injection approach as Windows: hooks the History API, hides non-DM navigation links, covers the status bar notch, mirrors toasts, and relays the unread count to the title bar.
+
+Voice and video calls work through Instagram's web WebRTC implementation — the app grants camera and microphone permissions via `WebChromeClient.onPermissionRequest()`.
+
+Privacy notes:
+
+- Your password is never seen or stored — login happens on Instagram's own secure page.
+- Session cookies live in the WebView's standard cookie storage.
+- The app uses a desktop Chrome user agent for best Instagram web compatibility.
+- `Privacy → Log out & clear local data` deletes all cookies, caches, and site storage.
+
+---
+
+## Building the Android App from Source
+
+### Prerequisites
+
+- JDK 17 or newer
+- Android SDK (API 34, build tools 34.0.0)
+- Kotlin 1.9.22+
+
+### Build
+
+```bash
+cd android
+./gradlew assembleDebug
+```
+
+The APK lands at `android/app/build/outputs/apk/debug/app-debug.apk`.
+
+Or use the build script (sets up JDK/SDK paths automatically):
+
+```bash
+cd android
+./build.sh
+```
+
+The script copies the APK to the project root as `InstaChat-Android-v<version>-debug.apk`.
+
+### Install on device
+
+```bash
+adb install android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+### Download pre-built APK
+
+Pre-built debug APKs are attached to each [GitHub release](https://github.com/AayushKumar1028/Insta-chat/releases).
 
