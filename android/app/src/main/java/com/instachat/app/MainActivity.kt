@@ -16,8 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import com.instachat.app.ui.InstaChatScreen
+import com.instachat.app.webview.InstagramWebView
 
 class MainActivity : ComponentActivity() {
+
+    var webViewRef: InstagramWebView? = null
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -59,7 +62,7 @@ class MainActivity : ComponentActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // Forward to WebView if needed
+        webViewRef?.handlePermissionResult(requestCode, permissions, grantResults)
     }
 }
 

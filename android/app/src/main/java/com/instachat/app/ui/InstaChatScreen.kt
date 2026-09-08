@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.instachat.app.MainActivity
 import com.instachat.app.webview.InstaWebViewClient
 import com.instachat.app.webview.InstagramWebView
 import kotlinx.coroutines.MainScope
@@ -179,6 +180,7 @@ fun InstaChatScreen() {
                         webView.setup()
                         webView.navigateToInbox()
                         webViewRef = webView
+                        (activity as? MainActivity)?.webViewRef = webView
                     }
                 },
                 modifier = Modifier.fillMaxSize()
