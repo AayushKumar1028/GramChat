@@ -1,3 +1,5 @@
+*.apk
+
 # Build output
 bin/
 obj/
