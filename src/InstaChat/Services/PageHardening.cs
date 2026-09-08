@@ -178,6 +178,20 @@ public static class PageHardening
           // cover it with an opaque bar in the page's background colour.
           // ---------------------------------------------------------------------
           let notchCover = null;
+          // Instagram renders the in-call UI as a full-screen overlay with
+          // call-specific controls. When it is present, the notch cover must
+          // back off so it does not sit on top of the call.
+          const CALL_LABEL = /^(end call|turn (off|on) video|switch to (video|audio)|mute audio|unmute audio|decline call|accept call)$/i;
+          const callActive = () => {
+            try {
+              return Array.from(document.querySelectorAll('[aria-label]')).some((el) => {
+                const label = (el.getAttribute('aria-label') || '').trim();
+                if (!CALL_LABEL.test(label)) return false;
+                const r = el.getBoundingClientRect();
+                return r.width > 0 && r.height > 0;
+              });
+            } catch (e) { return false; }
+          };
           const ensureNotchCover = () => {
             try {
               if (!document.body) return;
@@ -196,11 +210,13 @@ public static class PageHardening
                 ].join(';');
                 document.body.appendChild(notchCover);
               }
-              // Keep it in sync with light/dark pages.
+              // Keep it in sync with light/dark pages, and hide it while a call
+              // is active so it never covers the call UI.
               const bodyBg = getComputedStyle(document.body).backgroundColor;
               const htmlBg = getComputedStyle(document.documentElement).backgroundColor;
               const bg = bodyBg && bodyBg !== 'rgba(0, 0, 0, 0)' ? bodyBg : htmlBg;
               if (bg && bg !== 'rgba(0, 0, 0, 0)') notchCover.style.background = bg;
+              notchCover.style.display = callActive() ? 'none' : 'block';
             } catch (e) { /* ignore */ }
           };
           setInterval(ensureNotchCover, 500);

@@ -57,9 +57,18 @@ public partial class MainWindow : Window
             var userDataFolder = Path.Combine(AppDataDir, "WebView2");
             Directory.CreateDirectory(userDataFolder);
 
+            // Let Instagram's call UI start the incoming-call ringtone/video without
+            // requiring a prior click inside the page (Chromium's default autoplay
+            // policy would otherwise block it).
+            var environmentOptions = new CoreWebView2EnvironmentOptions
+            {
+                AdditionalBrowserArguments = "--autoplay-policy=no-user-gesture-required",
+            };
+
             var environment = await CoreWebView2Environment.CreateAsync(
                 browserExecutableFolder: null,
-                userDataFolder: userDataFolder);
+                userDataFolder: userDataFolder,
+                options: environmentOptions);
 
             await Web.EnsureCoreWebView2Async(environment);
         }
@@ -203,12 +212,21 @@ public partial class MainWindow : Window
 
     private void OnPermissionRequested(object? sender, CoreWebView2PermissionRequestedEventArgs e)
     {
-        // Desktop notifications for new messages are granted silently; everything else
-        // (camera, microphone, geolocation, ...) shows WebView2's standard prompt.
-        if (e.PermissionKind == CoreWebView2PermissionKind.Notifications)
+        // Auto-grant everything the chat experience needs so voice/video calls work
+        // out of the box (same behaviour as the Android client): desktop
+        // notifications (new-message and incoming-call toasts) plus the camera and
+        // microphone Instagram's WebRTC call UI uses. The page only accesses the
+        // camera/mic after the user actually starts or accepts a call; everything
+        // else (geolocation, sensors, ...) keeps WebView2's standard prompt.
+        switch (e.PermissionKind)
         {
-            e.State = CoreWebView2PermissionState.Allow;
-            e.Handled = true;
+            case CoreWebView2PermissionKind.Notifications:
+            case CoreWebView2PermissionKind.Camera:
+            case CoreWebView2PermissionKind.Microphone:
+                e.State = CoreWebView2PermissionState.Allow;
+                e.SavesInProfile = true;
+                e.Handled = true;
+                break;
         }
     }
 

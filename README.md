@@ -24,6 +24,7 @@ The application removes unnecessary distractions and focuses exclusively on comm
 - Access to Instagram Direct Messages
 - View existing conversations
 - Send and receive messages
+- Voice and video calls in DMs and group chats (WebRTC)
 - Real-time chat updates
 - Clean and distraction-free interface
 - No Instagram Reels access
@@ -136,6 +137,7 @@ Native iPhone and iPad application with messaging-focused functionality.
 - [x] Instagram login
 - [x] Direct messaging support
 - [x] Conversation management
+- [x] Voice and video calls
 - [x] Clean UI
 
 ### Version 1.0 (Android)
@@ -185,8 +187,10 @@ Privacy notes:
 - Session cookies live in an encrypted WebView2 profile under
   `%LOCALAPPDATA%\InstaChat\WebView2` (Chromium encrypts them with Windows DPAPI).
 - `Privacy → Log out & clear local data…` deletes all cookies, caches and site storage.
-- Camera/microphone/geolocation prompts are left to WebView2's standard permission UI;
-  desktop notification permission is granted automatically so new-message toasts work.
+- Camera and microphone are granted automatically so voice/video calls work (the page
+  only uses them after you start or accept a call); desktop notification permission is
+  granted automatically so new-message and incoming-call toasts work. All other
+  permissions (geolocation, sensors, ...) keep WebView2's standard prompt.
 
 ---
 
