@@ -212,6 +212,53 @@ object PageHardening {
           setInterval(sendTitle, 1000);
           sendTitle();
 
+          // ---- Force light mode (prevent Instagram dark theme) ----
+          const forceLightMode = () => {
+            try {
+              let existingStyle = document.getElementById('ica-light-mode');
+              if (existingStyle) existingStyle.remove();
+
+              const style = document.createElement('style');
+              style.id = 'ica-light-mode';
+              style.textContent = [
+                'html, body {',
+                '  color-scheme: light !important;',
+                '  background-color: #ffffff !important;',
+                '}',
+                ':root { --ig-primary-background: #ffffff; --ig-secondary-background: #fafafa; }',
+                'textarea, input[type="text"], [contenteditable="true"],',
+                '[role="textbox"], [aria-label="Message"],',
+                '[aria-label="Message…"], [placeholder*="Message"] {',
+                '  background-color: #fafafa !important;',
+                '  color: #262626 !important;',
+                '}',
+                'div[style*="background-color"] {',
+                '  /* handled below */',
+                '}'
+              ].join('\\n');
+              (document.head || document.documentElement).appendChild(style);
+
+              // Force colorScheme on documentElement
+              document.documentElement.style.colorScheme = 'light';
+
+              // Walk inline-styled elements and neutralise dark backgrounds
+              document.querySelectorAll('div, section, main, aside, nav, header, footer').forEach((el) => {
+                const bg = el.style.backgroundColor;
+                if (!bg) return;
+                // If the inline background is very dark, replace with white
+                const m = bg.match(/\\d+/g);
+                if (m && m.length >= 3) {
+                  const r = parseInt(m[0]), g = parseInt(m[1]), b = parseInt(m[2]);
+                  if (r < 60 && g < 60 && b < 80) {
+                    el.style.backgroundColor = '#ffffff';
+                  }
+                }
+              });
+            } catch (e) { /* ignore */ }
+          };
+          setInterval(forceLightMode, 1000);
+          forceLightMode();
+
           guard();
         })();
     """.trimIndent()

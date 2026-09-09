@@ -50,6 +50,9 @@ class InstagramWebView(
         // Set user agent to desktop Chrome for best Instagram web compatibility
         settings.userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
+        // Set white background to prevent dark flash before page loads
+        setBackgroundColor(android.graphics.Color.WHITE)
+
         // Add JS interface for title relay
         addJavascriptInterface(TitleRelayInterface(), "InstaChatHost")
 
