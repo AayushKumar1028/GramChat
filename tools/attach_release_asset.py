@@ -4,7 +4,7 @@ Uses the GitHub credential stored by Git Credential Manager (the same one used f
 git push) - the token is read in-process and never printed.
 
 Usage:  python tools/attach_release_asset.py <tag> <asset-file> [--apply-notes]
-Example: python tools/attach_release_asset.py v1.0-beta2 dist/InstaChat-1.0-beta2-win-x64.zip
+Example: python tools/attach_release_asset.py v1.0-beta2 dist/GramChat-1.0-beta2-win-x64.zip
 
 --apply-notes also sets the release title (convention: "v1.0-beta2" -> "v.1.0-beta2")
 and the release description.
@@ -17,13 +17,17 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-OWNER_REPO = "AayushKumar1028/Insta-chat"
+OWNER_REPO = "AayushKumar1028/GramChat"
 
-RELEASE_NOTES = """Chat-only Instagram for Windows - direct messages without Reels, Explore, Feed or Stories.
+RELEASE_NOTES = """GramChat for Windows - the full Instagram experience without Reels or Explore.
 
-**Download `InstaChat-{zip_base}-win-x64.zip` below, unzip it and run `InstaChat.exe`.**
+**Download `GramChat-{zip_base}-win-x64.zip` below, unzip it and run `GramChat.exe`.**
 
-- Direct messages only - no Reels, Explore, Feed or Stories (navigation is hard-blocked)
+- Everything Instagram has - feed, profiles, follow requests, private accounts, notifications,
+  settings, teen/parental supervision and Direct Messages - except Reels and Explore, which are
+  hard-blocked everywhere (the rail tab, in-feed reels and a profile's Reels tab)
+- Voice and video calls in DMs and group chats (WebRTC)
+- Links that leave Instagram open in your system browser
 - Self-contained single-file exe: no .NET, Node.js or other prerequisites required
 - Privacy: your password is never stored; session data is kept in an encrypted local profile;
   `Privacy -> Log out & clear local data` wipes everything
@@ -66,7 +70,7 @@ def github_request(url: str, method: str = "GET", data: bytes | None = None,
     req = urllib.request.Request(url, method=method, data=data)
     req.add_header("Authorization", f"Bearer {TOKEN}")
     req.add_header("Accept", "application/vnd.github+json")
-    req.add_header("User-Agent", "instachat-release-tool")
+    req.add_header("User-Agent", "gramchat-release-tool")
     for key, value in (headers or {}).items():
         req.add_header(key, value)
     try:

@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "InstaChat"
+rootProject.name = "GramChat"
 include(":app")

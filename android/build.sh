@@ -16,13 +16,13 @@ if [ -d "$HOME/tools/android-sdk" ]; then
     export ANDROID_HOME="$HOME/tools/android-sdk"
 fi
 
-echo "==> Building InstaChat Android APK..."
+echo "==> Building GramChat Android APK..."
 ./gradlew assembleDebug --no-daemon
 
 APK="app/build/outputs/apk/debug/app-debug.apk"
 if [ -f "$APK" ]; then
     VERSION=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts 2>/dev/null || echo "1.0.0")
-    OUTPUT="InstaChat-Android-v${VERSION}-debug.apk"
+    OUTPUT="GramChat-Android-v${VERSION}-debug.apk"
     cp "$APK" "$SCRIPT_DIR/../$OUTPUT"
     echo "==> APK built: $SCRIPT_DIR/../$OUTPUT"
 else

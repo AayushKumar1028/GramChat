@@ -1,4 +1,4 @@
-"""Generates src/InstaChat/app.ico - an Instagram-gradient chat-bubble icon.
+"""Generates src/GramChat/app.ico - an Instagram-gradient chat-bubble icon.
 
 Pure standard-library Python (no PIL): renders each size with 4x supersampling
 and writes 32bpp BMP entries into a Windows .ico container.
@@ -126,7 +126,7 @@ def bmp_entry(rgba, size):
 
 
 def main():
-    out = Path(__file__).resolve().parent.parent / "src" / "InstaChat" / "app.ico"
+    out = Path(__file__).resolve().parent.parent / "src" / "GramChat" / "app.ico"
     out.parent.mkdir(parents=True, exist_ok=True)
 
     images = []

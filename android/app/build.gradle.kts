@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.instachat.app"
+    namespace = "com.gramchat.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.instachat.app"
+        applicationId = "com.gramchat.app"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -65,6 +65,9 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
 
     implementation("androidx.webkit:webkit:1.10.0")
+
+    // Encrypted session database: SQLCipher (AES-256) + Android Keystore master key.
+    implementation("net.zetetic:sqlcipher-android:4.6.1")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")

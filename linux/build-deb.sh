@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build the InstaChat Linux .deb package.
+# Build the GramChat Linux .deb package.
 #
 #   ./linux/build-deb.sh
 #
@@ -37,10 +37,10 @@ VERSION_LABEL="1.0-Linux-beta1"
 DEBIAN_VERSION="1.0.0~beta1"
 RID="${RID:-linux-x64}"
 ARCH="amd64"
-PROJECT="src/InstaChatLinux/InstaChatLinux.csproj"
-PUBLISH_DIR="src/InstaChatLinux/bin/Release/net10.0/${RID}/publish"
+PROJECT="src/GramChatLinux/GramChatLinux.csproj"
+PUBLISH_DIR="src/GramChatLinux/bin/Release/net10.0/${RID}/publish"
 STAGING="linux/staging"
-OUT="dist/InstaChat-${VERSION_LABEL}-${ARCH}.deb"
+OUT="dist/GramChat-${VERSION_LABEL}-${ARCH}.deb"
 
 echo "==> Publishing ${RID} (self-contained)..."
 "$DOTNET" publish "$PROJECT" -c Release -r "$RID" --self-contained true -p:DebugType=none -p:DebugSymbols=false
@@ -49,18 +49,18 @@ echo "==> Assembling package layout..."
 rm -rf "$STAGING"
 mkdir -p "$STAGING/DEBIAN"
 mkdir -p "$STAGING/usr/bin"
-mkdir -p "$STAGING/usr/lib/instachat"
+mkdir -p "$STAGING/usr/lib/gramchat"
 mkdir -p "$STAGING/usr/share/applications"
 mkdir -p "$STAGING/usr/share/icons/hicolor/256x256/apps"
-mkdir -p "$STAGING/usr/share/doc/instachat"
+mkdir -p "$STAGING/usr/share/doc/gramchat"
 
-cp -r "$PUBLISH_DIR"/. "$STAGING/usr/lib/instachat/"
+cp -r "$PUBLISH_DIR"/. "$STAGING/usr/lib/gramchat/"
 # A real copy (not a symlink) keeps the package portable across filesystems
 # and hosts - MSYS on Windows turns `ln -s` into a plain copy anyway.
-cp "$STAGING/usr/lib/instachat/InstaChat" "$STAGING/usr/bin/instachat"
-cp linux/com.instachat.InstaChat.desktop "$STAGING/usr/share/applications/"
-cp linux/icon/instachat-256.png "$STAGING/usr/share/icons/hicolor/256x256/apps/instachat.png"
-cp linux/copyright "$STAGING/usr/share/doc/instachat/copyright"
+cp "$STAGING/usr/lib/gramchat/GramChat" "$STAGING/usr/bin/gramchat"
+cp linux/com.gramchat.GramChat.desktop "$STAGING/usr/share/applications/"
+cp linux/icon/gramchat-256.png "$STAGING/usr/share/icons/hicolor/256x256/apps/gramchat.png"
+cp linux/copyright "$STAGING/usr/share/doc/gramchat/copyright"
 
 SIZE_KB=$(du -sk "$STAGING/usr" | cut -f1)
 sed -e "s/@VERSION@/${DEBIAN_VERSION}/" \

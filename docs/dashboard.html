@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GramChat — Project Dashboard</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #171a22;
+    --card2: #1d212c;
+    --text: #e8eaf0;
+    --muted: #9aa1b2;
+    --line: #2a2f3d;
+    --g1: #833ab4; --g2: #e1306c; --g3: #f77737;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 15px/1.6 "Segoe UI", system-ui, sans-serif;
+    padding: 40px 20px 60px;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  .grad { background: linear-gradient(120deg, var(--g1), var(--g2) 55%, var(--g3)); }
+  .gradtext {
+    background: linear-gradient(120deg, var(--g1), var(--g2) 55%, var(--g3));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  header { display: flex; align-items: center; gap: 20px; margin-bottom: 10px; }
+  .logo { width: 72px; height: 72px; border-radius: 18px; flex: none; display: grid; place-items: center; }
+  h1 { font-size: 34px; letter-spacing: -0.5px; }
+  .tagline { color: var(--muted); margin-top: 2px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 34px; }
+  .badge {
+    font-size: 12.5px; font-weight: 600; color: #dfe3ec;
+    border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px;
+    background: var(--card);
+  }
+  .badge.ok { border-color: #2f6b3f; color: #7ee2a0; background: #12241a; }
+  .badge.warn { border-color: #7a5a2a; color: #eec07f; background: #241d10; }
+  section { margin-bottom: 34px; }
+  h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 1.6px;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 18px 20px;
+  }
+  .card h3 { font-size: 16px; margin-bottom: 8px; }
+  .card p, .card li { color: #c4cad7; font-size: 14px; }
+  .card ul { padding-left: 18px; }
+  .card li { margin: 4px 0; }
+  .card .num { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+  code, .mono {
+    font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px;
+    background: var(--card2); border: 1px solid var(--line);
+    border-radius: 8px; padding: 1px 7px;
+  }
+  pre {
+    font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px;
+    background: var(--card2); border: 1px solid var(--line);
+    border-radius: 10px; padding: 14px 16px; overflow-x: auto;
+    color: #d7dcea; line-height: 1.55;
+  }
+  pre .c { color: #7c8699; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+  td .mono { font-size: 12.5px; }
+  .pill { font-size: 12px; font-weight: 700; border-radius: 999px; padding: 3px 10px; }
+  .pill.good { background: #12241a; color: #7ee2a0; border: 1px solid #2f6b3f; }
+  .pill.bad { background: #241214; color: #f19a9a; border: 1px solid #6b2f35; }
+  .pill.old { background: #1c2030; color: #a7b0c5; border: 1px solid #343b52; }
+  footer { color: #6d7484; font-size: 13px; margin-top: 44px; border-top: 1px solid var(--line); padding-top: 18px; }
+  a { color: #8ab4ff; text-decoration: none; }
+  .steps li { margin: 8px 0; color: #c4cad7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo grad">
+      <svg width="44" height="44" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M13 12 h38 a8 8 0 0 1 8 8 v20 a8 8 0 0 1 -8 8 H28 l-10 8 v-8 h-5 a8 8 0 0 1 -8 -8 V20 a8 8 0 0 1 8 -8 z" fill="#ffffff"/>
+        <circle cx="23" cy="30" r="3.4" fill="#e1306c"/>
+        <circle cx="32" cy="30" r="3.4" fill="#e1306c"/>
+        <circle cx="41" cy="30" r="3.4" fill="#e1306c"/>
+      </svg>
+    </div>
+    <div>
+      <h1>GramChat</h1>
+      <div class="tagline">Instagram on Windows, Linux and Android — everything except Reels and Explore</div>
+    </div>
+  </header>
+
+  <div class="badges">
+    <span class="badge ok">● Reels &amp; Explore hard-blocked</span>
+    <span class="badge">Windows 10+ · Linux · Android 7+</span>
+    <span class="badge">WebView2 · WebKitGTK · Android WebView</span>
+    <span class="badge">.NET 10 · Kotlin</span>
+    <span class="badge warn">unofficial client</span>
+  </div>
+
+  <section>
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="card"><h3>✅ The real Instagram</h3>
+        <ul>
+          <li>Home feed, profiles, follow / follow requests</li>
+          <li>Private accounts · notifications · settings</li>
+          <li>Teen accounts and parental supervision (Instagram's own controls)</li>
+          <li>Direct Messages with voice and video calls</li>
+        </ul>
+      </div>
+      <div class="card"><h3>🚫 Reels &amp; Explore removed</h3>
+        <ul>
+          <li>No Reels rail tab, no in-feed reels, no profile Reels tab</li>
+          <li>No Explore page or explore-style recommendations</li>
+          <li>Blocked by path segment, so <span class="mono">/someuser/reels/</span> is caught too</li>
+          <li>External links open in the system browser</li>
+        </ul>
+      </div>
+      <div class="card"><h3>🔒 Privacy</h3>
+        <ul>
+          <li>Password never seen or stored</li>
+          <li>Encrypted session database (SQLCipher AES-256)</li>
+          <li>Key protected by DPAPI / Keystore / 0600 file</li>
+          <li>"Log out &amp; clear local data" wipes everything</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How the guard works</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="num">LAYER 1 — NATIVE</div>
+        <h3>Navigation guard</h3>
+        <p><span class="mono">Services/NavigationPolicy.cs</span> · <span class="mono">webview/NavigationPolicy.kt</span> — every top-level navigation and popup is classified as Allow / Bounce-to-Home / Block / Open-external. Reels and Explore are bounced back to the Home feed; links that leave Instagram open in your system browser.</p>
+      </div>
+      <div class="card">
+        <div class="num">LAYER 2 — IN-PAGE</div>
+        <h3>SPA guard</h3>
+        <p><span class="mono">Services/PageHardening.cs</span> · <span class="mono">webview/PageHardening.kt</span> — Instagram's web client is a React SPA whose clicks never trigger real navigations. Injected JS hooks the History API, hides every Reels/Explore link and tab, and force-returns home if the router ever lands on one.</p>
+      </div>
+    </div>
+    <div class="grid" style="margin-top:14px">
+      <div class="card">
+        <h3>⚡ Event-driven, call-aware</h3>
+        <p>One <span class="mono">MutationObserver</span> collapsed into a single animation frame (plus one 2&nbsp;s backstop) replaces the old 250–500&nbsp;ms polling loops. During a call all cosmetic DOM work pauses so the main thread stays free for WebRTC, and the shell keeps the screen awake (Android).</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Run it</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Windows</h3>
+<pre><span class="c"># from the repo root (local SDK: ../tools/dotnet-sdk)</span>
+dotnet publish src/GramChat/GramChat.csproj `
+  -c Release -r win-x64 --self-contained true `
+  -p:PublishSingleFile=true `
+  -p:IncludeNativeLibrariesForSelfExtract=true `
+  -p:EnableCompressionInSingleFile=true</pre>
+      </div>
+      <div class="card">
+        <h3>Linux (.deb)</h3>
+<pre><span class="c"># from the repo root</span>
+./linux/build-deb.sh
+sudo apt install ./dist/GramChat-1.0-Linux-beta1-amd64.deb</pre>
+      </div>
+      <div class="card">
+        <h3>Android</h3>
+<pre><span class="c"># from android/</span>
+./build.sh
+adb install android/app/build/outputs/apk/debug/app-debug.apk</pre>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Platforms</h2>
+    <div class="card" style="padding:6px 12px">
+      <table>
+        <tr><th>Platform</th><th>Stack</th><th>Session key</th><th>Status</th></tr>
+        <tr>
+          <td><b>Windows</b></td><td><span class="mono">WPF + WebView2</span></td>
+          <td>DPAPI</td><td><span class="pill good">working</span></td>
+        </tr>
+        <tr>
+          <td><b>Linux</b></td><td><span class="mono">GTK4 + WebKitGTK 6.0</span></td>
+          <td>0600 key file</td><td><span class="pill good">working</span></td>
+        </tr>
+        <tr>
+          <td><b>Android</b></td><td><span class="mono">Jetpack Compose + WebView</span></td>
+          <td>Android Keystore</td><td><span class="pill good">working</span></td>
+        </tr>
+        <tr>
+          <td>iOS</td><td><span class="mono">planned</span></td>
+          <td>—</td><td><span class="pill old">planned</span></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Roadmap — v1.5</h2>
+    <div class="card">
+      <ul>
+        <li>Improved notifications — tray icon, unread badge, toasts</li>
+        <li>Multiple accounts · account switching</li>
+        <li>Optional PIN lock / focus schedules on top of Instagram's own supervision</li>
+        <li>Dark mode · accessibility improvements</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Repo: <a href="https://github.com/AayushKumar1028/GramChat">github.com/AayushKumar1028/GramChat</a>
+    · Releases: <a href="https://github.com/AayushKumar1028/GramChat/releases">…/releases</a>
+    · GramChat is an independent, unofficial client. Not affiliated with or endorsed by Instagram or Meta.
+  </footer>
+</div>
+</body>
+</html>

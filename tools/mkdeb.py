@@ -2,7 +2,7 @@
 """Build a Debian .deb package from a staging directory.
 
 Works on any host with Python 3 (no dpkg / binutils ar required), which lets
-the InstaChat .deb be produced from the Windows development machine too.
+the GramChat .deb be produced from the Windows development machine too.
 
 Layout expected in the staging directory::
 
@@ -28,8 +28,8 @@ import time
 # Executables that must keep their +x bit even when the package is built on a
 # filesystem without executable permissions (e.g. cross-building from Windows).
 FORCE_EXEC = {
-    "usr/lib/instachat/InstaChat",
-    "usr/bin/instachat",
+    "usr/lib/gramchat/GramChat",
+    "usr/bin/gramchat",
 }
 
 

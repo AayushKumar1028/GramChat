@@ -1,20 +1,20 @@
 <resources>
-    <string name="app_name">InstaChat</string>
+    <string name="app_name">GramChat</string>
     <string name="messages">Messages</string>
     <string name="privacy">Privacy</string>
     <string name="open_inbox">Open inbox</string>
     <string name="new_message">New message</string>
     <string name="reload">Reload</string>
     <string name="logout_clear">Log out &amp; clear local data</string>
-    <string name="about">About InstaChat</string>
+    <string name="about">About GramChat</string>
     <string name="exit">Exit</string>
     <string name="cant_reach">Can\'t reach Instagram</string>
     <string name="offline_detail">Check your internet connection and try again.</string>
     <string name="retry">Retry</string>
     <string name="close">Close</string>
-    <string name="about_description">Chat-only Instagram. Direct messages without Reels, Explore, Feed or Stories.</string>
+    <string name="about_description">The full Instagram experience — feed, profiles, messages, follow requests, private accounts and settings — with Reels and Explore kept out.</string>
     <string name="privacy_heading">Privacy</string>
-    <string name="privacy_details">• Your Instagram password is never seen or stored — you sign in on Instagram\'s own secure page.\n• Session cookies are kept in an encrypted local browser profile.\n• The app only loads the Direct Messaging experience; navigation to any other part of Instagram is blocked.\n• No analytics, no advertising SDKs, no data collection.</string>
+    <string name="privacy_details">• Your Instagram password is never seen or stored — you sign in on Instagram\'s own secure page.\n• Session cookies are kept in an encrypted local browser profile.\n• Reels and Explore are blocked everywhere in the app; every other part of Instagram works normally.\n• Links that leave Instagram open in your default browser.\n• No analytics, no advertising SDKs, no data collection.</string>
     <string name="logout_confirm">Log out and delete all locally stored Instagram data?\n\nThis removes the session cookies, cached files and site data from this device. You will need to log in again next time.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

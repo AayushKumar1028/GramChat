@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>GramChat</RootNamespace>
+    <AssemblyName>GramChat</AssemblyName>
+    <Version>1.0.0-beta1</Version>
+    <Product>GramChat</Product>
+    <AssemblyTitle>GramChat</AssemblyTitle>
+    <Description>Instagram desktop client for Linux. Everything but Reels and Explore.</Description>
+    <Authors>GramChat</Authors>
+    <!-- This project only ever runs on Linux: silence the platform analyzer
+         (WebKitGTK is Linux-only) and the GirCore obsolete-constructor warning
+         (subclasses like MainWindow must call the native base ctor). -->
+    <NoWarn>$(NoWarn);CA1416;GirCore1007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GirCore.Gtk-4.0" Version="0.8.1" />
+    <PackageReference Include="GirCore.WebKit-6.0" Version="0.8.1" />
+    <!-- Encrypted session database (SQLCipher AES-256). On Linux the key is a
+         0600 file (Chromium's Linux model); Android uses the Keystore instead. -->
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.0" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlcipher" Version="2.1.11" />
+  </ItemGroup>
+
+  <!-- The navigation policy, in-page hardening script and encrypted session
+       store are shared verbatim with the Windows client so both platforms
+       enforce the same Reels/Explore-free rules and use the same secure storage. -->
+  <ItemGroup>
+    <Compile Include="../GramChat/Services/NavigationPolicy.cs" Link="Services/NavigationPolicy.cs" />
+    <Compile Include="../GramChat/Services/PageHardening.cs" Link="Services/PageHardening.cs" />
+    <Compile Include="../GramChat/Services/SecureSessionStore.cs" Link="Services/SecureSessionStore.cs" />
+    <Compile Include="../GramChat/Services/SessionKeyProtector.cs" Link="Services/SessionKeyProtector.cs" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=GramChat
+GenericName=Instagram Messenger
+Comment=Instagram for your desktop. Everything but Reels and Explore.
+Exec=gramchat
+Icon=gramchat
+Terminal=false
+Categories=Network;InstantMessaging;
+Keywords=Instagram;Chat;Direct Messages;Messaging;DM;
+StartupNotify=true
+StartupWMClass=com.gramchat.GramChat
+DBusActivatable=true
+X-GNOME-UsesNotifications=true
